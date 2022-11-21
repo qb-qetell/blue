@@ -1,4 +1,4 @@
-package blum
+package blue
 
 import "time"
 

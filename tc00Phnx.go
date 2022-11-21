@@ -1,18 +1,18 @@
-package blum
+package blue
 
 import "strings"
 import "sync"
 import "time"
 
 type Phnx struct {
-	blum       *Blum
+	blue       *Blue
 	trck       *Trck
 	mtxx *sync.Mutex
 	core  chan *Mssg
 }
-	func Phnx_Estb (blum *Blum, trck *Trck, cpct uint16) (*Phnx) {
+	func Phnx_Estb (blue *Blue, trck *Trck, cpct uint16) (*Phnx) {
 		_ba00 := &Phnx {
-			blum:                          blum,
+			blue:                          blue,
 			trck:                          trck,
 			mtxx:                &sync.Mutex {},
 			core: make (chan *Mssg, int (cpct)),
@@ -21,20 +21,20 @@ type Phnx struct {
 	}
 	
 	func (i *Phnx) Drop (sndr, rcpn string, mssg *Mssg, wndw ... time.Duration) (bool) {
-		_ak00 := strings.Index (sndr, i.blum.idxx + "." + i.trck.idxx)
+		_ak00 := strings.Index (sndr, i.blue.idxx + "." + i.trck.idxx)
 		if _ak00 !=   0 { return false }
 		/*--2--*/
 		if  mssg == nil { return false }
 		/*--1--*/
-		_ba00 := i.blum.mpxx
-		if i.blum.idxx + ".!"  ==  rcpn {
-			_ba00 = i.blum.spxx
+		_ba00 := i.blue.mpxx
+		if i.blue.idxx + ".!"  ==  rcpn {
+			_ba00 = i.blue.spxx
 		} else {
-			for _,  _cc00 := range i.blum.tixx {
-				_da00 := i.blum.idxx +  "." + _cc00
+			for _,  _cc00 := range i.blue.tixx {
+				_da00 := i.blue.idxx +  "." + _cc00
 				_db00 := strings.Index (rcpn, _da00)
 				if _db00 == 0 {
-					_ba00 = i.blum.tdxx [_da00].phnx
+					_ba00 = i.blue.tdxx [_da00].phnx
 					break
 				}
 			}

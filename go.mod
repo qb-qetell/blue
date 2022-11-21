@@ -1,3 +1,3 @@
-module github.com/qb-qetell/blum
+module github.com/qb-qetell/blue
 
 go 1.18

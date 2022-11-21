@@ -1,7 +1,7 @@
-package blum
+package blue
 
 type Trck struct {
-	blum        *Blum // Blum
+	blum        *Blue // Blue
 	idxx       string // Identity
 	name       string // Identity
 	phnx        *Phnx // Phone

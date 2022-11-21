@@ -1,11 +1,11 @@
-package blum
+package blue
 
 import "errors"
 import "regexp"
 import "strings"
 import "time"
 
-type Blum struct {
+type Blue struct {
 	idxx           string // ID
 	mpxx            *Phnx // Mother's phone
 	spxx            *Phnx // System's phone
@@ -14,7 +14,7 @@ type Blum struct {
 	lsxx             bool // Life status
 	usxx             bool // Use status
 }
-	func Blum_Estb (idxx string, mpcx, spcx uint16) (error, *Blum) {
+	func Blue_Estb (idxx string, mpcx, spcx uint16) (error, *Blue) {
 		_ba00 := strings.ToLower (idxx)
 		if regexp.MustCompile (`^[a-z0-9]+(\.[a-z0-9]+)*$`).MatchString(_ba00) == false {
 			_ca00 := errors.New (
@@ -23,7 +23,7 @@ type Blum struct {
 			)
 			return _ca00, nil
 		}
-		_bb00 := &Blum {
+		_bb00 := &Blue {
 			idxx:                   _ba00,
 			mpxx:        Phnx_Estb (nil, nil, mpcx),
 			spxx:        Phnx_Estb (nil, nil, spcx),
@@ -32,13 +32,13 @@ type Blum struct {
 			lsxx:                   false,
 			usxx:                   false,
 		}
-		_bb00.mpxx.blum = _bb00
-		_bb00.spxx.blum = _bb00
+		_bb00.mpxx.blue = _bb00
+		_bb00.spxx.blue = _bb00
 		/*--1--*/
 		return nil, _bb00
 	}
 	
-	func (i *Blum) Elbr (
+	func (i *Blue) Elbr (
 		idxx       string, // ID
 		name       string, // Name
 		pcxx       uint16, // Phone capacity
@@ -82,14 +82,14 @@ type Blum struct {
 		return nil
 	}
 	
-	func (i *Blum) Runx () (error, *Phnx) {
+	func (i *Blue) Runx () (error, *Phnx) {
 		if i.usxx == true {
 			_ca00 := errors.New ("Blum has already been run.")
 			return _ca00, nil
 		}
 		i.usxx = true
 		/*--1--*/
-		go func (i *Blum) {
+		go func (i *Blue) {
 			go tmxx (i)
 			for _, _da00 := range i.tixx {
 				go i.tdxx [_da00].code (
@@ -117,9 +117,9 @@ type Blum struct {
 		return nil, i.spxx
 	}
 	
-	func (i *Blum) Halt () {
+	func (i *Blue) Halt () {
 		if i.lsxx == false { return }
 	}
 	
-	func tmxx (i *Blum) {}
+	func tmxx (i *Blue) {}
 	
