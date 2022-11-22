@@ -11,4 +11,5 @@ type Trck struct {
 	snxx       string // Start-up note
 }
 	func (i *Trck) runx () {
+		go i.code (i.blum.idxx, i.idxx, i.name, i.phnx, i.edxx)
 	}

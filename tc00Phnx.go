@@ -10,7 +10,7 @@ type Phnx struct {
 	mtxx *sync.Mutex
 	core  chan *Mssg
 }
-	func Phnx_Estb (blue *Blue, trck *Trck, cpct uint16) (*Phnx) {
+	func phnx_Estb (blue *Blue, trck *Trck, cpct uint16) (*Phnx) {
 		_ba00 := &Phnx {
 			blue:                          blue,
 			trck:                          trck,
@@ -21,14 +21,14 @@ type Phnx struct {
 	}
 	
 	func (i *Phnx) Drop (sndr, rcpn string, mssg *Mssg, wndw ... time.Duration) (bool) {
-		_ak00 := strings.Index (sndr, i.blue.idxx + "." + i.trck.idxx)
+		_ak00 := strings.Index (sndr, i.trck.idxx)
 		if _ak00 !=   0 { return false }
 		/*--2--*/
 		if  mssg == nil { return false }
 		/*--1--*/
-		_ba00 := i.blue.mpxx
-		if i.blue.idxx + ".!"  ==  rcpn {
-			_ba00 = i.blue.spxx
+		_ba00   := i.blue.mtxx.phnx
+		if rcpn == i.blue.idxx + ".!" {
+			_ba00 = i.blue.stxx.phnx
 		} else {
 			for _,  _cc00 := range i.blue.tixx {
 				_da00 := i.blue.idxx +  "." + _cc00

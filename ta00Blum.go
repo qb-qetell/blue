@@ -7,8 +7,8 @@ import "time"
 
 type Blue struct {
 	idxx           string // ID
-	mpxx            *Phnx // Mother's phone
-	spxx            *Phnx // System's phone
+	mtxx            *Trck // Mother's phone
+	stxx            *Trck // System's phone
 	tixx         []string // Trck index
 	tdxx map[string]*Trck // Trck details
 	lsxx             bool // Life status
@@ -16,7 +16,7 @@ type Blue struct {
 }
 	func Blue_Estb (idxx string, mpcx, spcx uint16) (error, *Blue) {
 		_ba00 := strings.ToLower (idxx)
-		if regexp.MustCompile (`^[a-z0-9]+(\.[a-z0-9]+)*$`).MatchString(_ba00) == false {
+		if regexp.MustCompile (`^[a-z0-9]+(\.[a-z0-9]+)*$`).MatchString (_ba00) == false{
 			_ca00 := errors.New (
 				"String can not be used as ID. [It contains one or more " +
 				"illegal characters.]",
@@ -24,16 +24,36 @@ type Blue struct {
 			return _ca00, nil
 		}
 		_bb00 := &Blue {
-			idxx:                   _ba00,
-			mpxx:        Phnx_Estb (nil, nil, mpcx),
-			spxx:        Phnx_Estb (nil, nil, spcx),
-			tixx:             []string {},
-			tdxx: make (map[string]*Trck),
-			lsxx:                   false,
-			usxx:                   false,
+			idxx:                        _ba00,
+			mtxx:                          nil,
+			stxx:                          nil,
+			tixx:                  []string {},
+			tdxx:      make (map[string]*Trck),
+			lsxx:                        false,
+			usxx:                        false,
 		}
-		_bb00.mpxx.blue = _bb00
-		_bb00.spxx.blue = _bb00
+		_bc00 := &Trck {
+			blum:                        _bb00,
+			idxx:                        _ba00,
+			name:               "Mother Track",
+			phnx: phnx_Estb (_bb00, nil, mpcx),
+			edxx:                          nil,
+			code:                          nil,
+			ssxx:                          "-",
+		}
+		_bb00.mtxx           = _bc00
+		_bb00.mtxx.phnx.trck = _bc00
+		_bd00 := &Trck {
+			blum:                        _bb00,
+			idxx:                 _ba00 + ".!",
+			name:               "System Track",
+			phnx: phnx_Estb (_bb00, nil, spcx),
+			edxx:                          nil,
+			code:                          nil,
+			ssxx:                          "-",
+		}
+		_bb00.stxx           = _bd00
+		_bb00.stxx.phnx.trck = _bd00
 		/*--1--*/
 		return nil, _bb00
 	}
@@ -53,8 +73,9 @@ type Blue struct {
 			)
 			return _ca00
 		}
+		_bb00 := i.idxx + "." + _ba00
 		for _, _bc00 := range i.tixx {
-			if idxx == _bc00 {
+			if _bc00 == _bb00 {
 				_ca00 := errors.New ("A track is already using this ID.")
 				return _ca00
 			}
@@ -66,23 +87,23 @@ type Blue struct {
 		}
 		/*--1--*/
 		_bd00 := &Trck {
-			blum:                   i,
-			idxx:                idxx,
-			name:                name,
-			phnx: Phnx_Estb (i, nil, pcxx),
-			edxx:                edxx,
-			code:                code,
-			ssxx:                 "-",
+			blum:                        i,
+			idxx:                    _bb00,
+			name:                     name,
+			phnx: phnx_Estb (i, nil, pcxx),
+			edxx:                     edxx,
+			code:                     code,
+			ssxx:                      "-",
 		}
 		_bd00.phnx.trck = _bd00
 		/*--1--*/
-		i.tixx = append (i.tixx, idxx)
+		i.tixx = append (i.tixx, _bb00)
 		i.tdxx [idxx]   = _bd00
 		/*--1--*/
 		return nil
 	}
 	
-	func (i *Blue) Runx () (error, *Phnx) {
+	func (i *Blue) Strt () (error, *Phnx) {
 		if i.usxx == true {
 			_ca00 := errors.New ("Blum has already been run.")
 			return _ca00, nil
@@ -114,11 +135,13 @@ type Blue struct {
 			}
 		} (i)
 		/*--1--*/
-		return nil, i.spxx
+		return nil, i.stxx.phnx
 	}
 	
 	func (i *Blue) Halt () {
-		if i.lsxx == false { return }
+		_ba00 := Mssg_Estb ([]string {"ca00"})
+		_ba00.Send (i.mtxx.idxx, i.stxx.idxx, i.stxx.phnx, (time.Hour * 24))
+		return
 	}
 	
 	func tmxx (i *Blue) {}
