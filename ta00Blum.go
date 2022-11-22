@@ -139,10 +139,71 @@ type Blue struct {
 	}
 	
 	func (i *Blue) Halt () {
-		_ba00 := Mssg_Estb ([]string {"ca00"})
-		_ba00.Send (i.mtxx.idxx, i.stxx.idxx, i.stxx.phnx, (time.Hour * 24))
+		_ba00 := Mssg_Estb ([]string {"sxxx.ba00"})
+		_ba00.Send (i.mtxx.idxx, i.stxx.idxx, i.mtxx.phnx, (time.Hour * 24))
 		return
 	}
 	
-	func tmxx (i *Blue) {}
-	
+	func tmxx (i *Blue) {for {
+		_ba00 := i.mtxx.phnx.Ftch ()
+		if _ba00 == nil {
+			time.Sleep (time.Millisecond * 1)
+			continue
+		}
+		/*--1--*/
+		_bb00, _bc00 := _ba00.FCXX ().([]string)
+		if _bc00 == false || len (_bb00) < 2 {
+			goto slpx
+		}
+		/*--1--*/
+		if /*--*/ _bb00 [0] == "txxx.ba00" {
+			if len (_bb00) < 2 { goto slpx }
+			/*--2--*/
+			_ca00  :=  ""
+			for _,  _cc00 := range  i.tixx {
+				_ca00  = _cc00
+				_db00 := strings.Index (_ba00.sndr.idxx, _cc00)
+				if _db00 == 0 {
+					i.tdxx [_cc00].ssxx = "f"
+					i.tdxx [_cc00].snxx = _bb00 [1]
+					break
+				}
+			}
+			/*--2--*/
+			_cd00 :=        Mssg_Estb ([]string {"txxx.ba00", _ca00, _bb00 [1]})
+			_cd00.Send (i.stxx.idxx, i.mtxx.idxx, i.stxx.phnx, (time.Hour * 24))
+			/*--2--*/
+			goto slpx
+		} else if _bb00 [0] == "txxx.bb00" {
+			for _,  _cc00 := range  i.tixx {
+				_db00 := strings.Index (_ba00.sndr.idxx, _cc00)
+				if _db00 == 0 {
+					i.tdxx [_cc00].ssxx = "s"
+					break
+				}
+			}
+			/*--2--*/
+			_cd00 :=                          Mssg_Estb ([]string {"txxx.bb00"})
+			_cd00.Send (i.stxx.idxx, i.mtxx.idxx, i.stxx.phnx, (time.Hour * 24))
+			/*--2--*/
+			goto slpx
+		} else if _bb00 [0] == "txxx.bc00" {
+			if  len (_bb00)     <      3 { goto slpx }
+			if _ba00.sndr.idxx != i.idxx { goto slpx }
+			/*--2--*/
+			for _,  _cc00 := range  i.tixx {
+				_cd00 := Mssg_Estb ([]string {"txxx.ba00"})
+				_cd00.Send (
+					i.stxx.idxx,
+					i.tdxx [_cc00].idxx,
+					i.stxx.phnx,
+					(time.Hour * 24),
+				)
+			}
+			/*--2--*/
+			goto slpx
+		}
+		/*--1--*/
+		slpx:
+		time.Sleep (time.Millisecond * 1)
+	}}
