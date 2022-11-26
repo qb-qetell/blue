@@ -3,8 +3,8 @@ package blue
 import "time"
 
 type Mssg struct {
-	sndr        *Trck
-	rcpn        *Trck
+	sndr       string
+	rcpn       string
 	core interface {}
 	tmst       string
 }
@@ -23,18 +23,10 @@ type Mssg struct {
 		/*--1--*/
 		return _bc00
 	}
-	func (i *Mssg) FSXX ()   (   string   ) { // Fetch message sender
-		if i.sndr == nil { return  "" }
-		return i.sndr.idxx
-	}
-	func (i *Mssg) FRXX ()   (   string   ) { // Fetch message recipient
-		if i.rcpn == nil { return  "" }
-		return i.rcpn.idxx
-	}
+	func (i *Mssg) FSXX ()   (   string   ) { return i.sndr }
+	func (i *Mssg) FRXX ()   (   string   ) { return i.rcpn }
 	func (i *Mssg) FCXX ()   (interface {}) { // Fetch message core
 		if i.core == nil { return  "" }
 		return i.core
 	}
-	func (i *Mssg) FTXX ()   (   string   ) { // Fetch message timestamp
-		return i.tmst 
-	}
+	func (i *Mssg) FTXX ()   (   string   ) { return i.tmst }
