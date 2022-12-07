@@ -115,7 +115,10 @@ type Blue struct {
 			_ca00 := errors.New ("Blum has already been run.")
 			return _ca00, nil
 		}
+		/*--1--*/
 		i.usxx = true
+		/*--1--*/
+		
 		/*--1--*/
 		go func (i *Blue) {
 			go tmxx (i)

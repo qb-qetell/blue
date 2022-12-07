@@ -19,7 +19,8 @@ func c4xx (mixx, idxx, name string, phnx *Phnx, edxx interface {}) (error)     {
 		_ca00 := phnx.Ftch (time.Second * 2)
 		if _ca00 == nil {
 			//_ba00.Halt ()
-			continue
+			//continue
+			return nil
 		}
 		fmt.Println ("c4xx:", _ca00.FSXX (), _ca00.FRXX (), _ca00.FCXX (), _ca00.FTXX ())
 	}

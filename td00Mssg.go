@@ -25,8 +25,5 @@ type Mssg struct {
 	}
 	func (i *Mssg) FSXX ()   (   string   ) { return i.sndr }
 	func (i *Mssg) FRXX ()   (   string   ) { return i.rcpn }
-	func (i *Mssg) FCXX ()   (interface {}) { // Fetch message core
-		if i.core == nil { return  "" }
-		return i.core
-	}
+	func (i *Mssg) FCXX ()   (interface {}) { return i.core }
 	func (i *Mssg) FTXX ()   (   string   ) { return i.tmst }

@@ -44,6 +44,10 @@ func TestBa00_ (t *testing.T) {
 		return
 	}
 	/*--1--*/
+	go func () {
+		time.Sleep (time.Second * 2)
+		_ba00.Halt  ()
+	} ()
 	for {
 		_ca00 := _bc20.Ftch (time.Second * 2)
 		if _ca00 == nil {

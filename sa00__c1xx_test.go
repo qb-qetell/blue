@@ -15,7 +15,7 @@ func c1xx (mixx, idxx, name string, phnx *Phnx, edxx interface {})     (error) {
 		fmt.Println ( _ca00 )
 	}
 	/*--1--*/
-	for i := 1; i <= 1000000; i ++ {
+	for i := 1; i <= 10; i ++ {
 		_ca00 :=  Mssg_Estb ([]string {"sxxx.bc00"})
 		_cb00 := _ca00.Send (phnx.trck.idxx, "1234.i4xxy", phnx, time.Hour * 1)
 		if _cb00 == false { fmt.Println (_cb00) }
