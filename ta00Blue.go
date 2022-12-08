@@ -165,10 +165,10 @@ type Blue struct {
 			continue
 		}
 		/*--1--*/
-		if /*--*/ _bb00 [0]   ==  "txxx.ba00" { // Track could not start up
-			if len (_bb00) < 2 { continue }
+		if /*--*/ _bb00 [0]  == "txxx.ba00" { /* Track could not start up */
+			if len (_bb00) < 2 {continue}
 			_ca00  :=  ""
-			for _,  _cc00 := range i.tixx {
+			for _,  _cc00 := range  i.tixx {
 				_ca00  = _cc00
 				_db00 := strings.Index (_ba00.sndr, _cc00)
 				if _db00 == 0 {
