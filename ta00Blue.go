@@ -245,30 +245,26 @@ type Blue struct {
 			if i.sisx == true { continue }
 			i.sisx = true
 			/*--2--*/
-			for iCA00 := len (i.tixx); iCA00 >= 1; iCA00 -- {
-				_cc00 := i.tixx [iCA00 - 1]
-				_cd00 := Mssg_Estb ([]string {"sxxx.bc00"})
-				/*--3--*/
-				_ce00 := false
-				for i.tdxx [_cc00].lsxx == "l" {
-					_ce00 = _cd00.Send (
-						i.stxx.idxx             ,
-						i.tdxx [_cc00].idxx     ,
-						i.stxx.phnx             ,
-					)
-					if _ce00 ==true { break }
-					time.Sleep (time.Millisecond * 1)
-				}
-				/*--3--*/
-			}
-			/*--2--*/
 			go func (i *Blue) () {
-				for iEA00 := len (i.tixx); iEA00 >= 1; iEA00 -- {
-					_fc00 :=  i.tixx  [iEA00  - 1]
-					for i.tdxx [_fc00].lsxx  == "l" {
-						time.Sleep (time.Millisecond * 1)
+				for iCA00 := len (i.tixx);  iCA00 >= 1;  iCA00 -- {
+					_cc00 := i.tixx [iCA00 - 1]
+					/*--4--*/
+					for i.tdxx [_cc00].lsxx  ==  "l" {
+						time.Sleep (time.Millisecond  *  1)
+						_da00 :=  Mssg_Estb ([]string {"sxxx.bc00"})
+						_db00 := _da00.Send (
+							i.stxx.idxx               ,
+							i.tdxx [_cc00].idxx       ,
+							i.stxx.phnx               ,
+						)
+						if _db00 == nil { break }
+					}
+					/*--4--*/
+					for i.tdxx [_cc00].lsxx  ==  "l" {
+						time.Sleep (time.Millisecond  *  1)
 					}
 				}
+				/*--3--*/
 				i.scsx = true
 			} (i)
 		}

@@ -1,5 +1,7 @@
 package blue
 
+import "errors"
+import "fmt"
 import "strings"
 import "sync"
 import "time"
@@ -20,11 +22,17 @@ type Phnx struct {
 		return _ba00
 	}
 	
-	func (i *Phnx) Drop (sndr, rcpn string, mssg *Mssg, wndw ... time.Duration) (bool) {
+	func (i *Phnx) Drop (sndr, rcpn string, mssg *Mssg, wndw ... time.Duration) (error) {
 		_ak00 := strings.Index (sndr, i.trck.idxx)
-		if _ak00 !=   0 { return false }
+		if _ak00 !=   0 {
+			_ca00 := fmt.Sprintf ("Sender ID is illegal.",)
+			return errors.New (_ca00)
+		}
 		/*--2--*/
-		if  mssg == nil { return false }
+		if  mssg == nil {
+			_ca00 := fmt.Sprintf ("Message not provided.",)
+			return errors.New (_ca00)
+		}
 		/*--1--*/
 		mssg.sndr = sndr
 		/*--1--*/
@@ -59,12 +67,16 @@ type Phnx struct {
 		select {
 			case _ba00.phnx.core <-  mssg: {
 				go func (chnl chan bool)  { _ = <- chnl } (_bc00)
-				return true
+				return nil
 			}
-			case _ = <- _bc00: { return false }
+			case _ = <- _bc00: {
+				_da00 := fmt.Sprintf ("Sending window elapsed.",)
+				return errors.New (_da00)
+			}
 		}
 		/*--1--*/
-		return false
+		_bd00 := fmt.Sprintf ("Bug detected.",)
+		return errors.New (_bd00)
 	}
 	
 	func (i *Phnx) Ftch (wndw ... time.Duration) (*Mssg) {
@@ -87,7 +99,7 @@ type Phnx struct {
 			case _ = <- _bc00: { return   nil }
 		}
 	}
-func (i *Phnx) NtfySystAbtxFldxStrt (rsnx string, wndw ... time.Duration) (bool) {
+func (i *Phnx) NtfySystAbtxFldxStrt (rsnx string, wndw ... time.Duration) (error) {
 	_ba00 := time.Millisecond * 4
 	if wndw != nil && len (wndw) > 0 {
 		_ba00 = wndw [0]
@@ -95,9 +107,13 @@ func (i *Phnx) NtfySystAbtxFldxStrt (rsnx string, wndw ... time.Duration) (bool)
 	/*--1--*/
 	_bb00 :=            Mssg_Estb ([]string {"txxx.ba00",   rsnx})
 	_bc00 := _bb00.Send (i.trck.idxx, i.blue.stxx.idxx, i, _ba00 )
+	if _bc00 != nil {
+		_ca00 := fmt.Sprintf ("Could not notify system. [%s]", _bc00.Error ())
+		_bc00 =  errors.New  (_ca00)
+	}
 	return _bc00
 }
-func (i *Phnx) NtfySystAbtxScsfStrt (wndw ... time.Duration)  (bool) {
+func (i *Phnx) NtfySystAbtxScsfStrt (wndw ... time.Duration)  (error) {
 	_ba00 := time.Millisecond * 4
 	if wndw != nil && len (wndw) > 0 {
 		_ba00 = wndw [0]
@@ -105,5 +121,9 @@ func (i *Phnx) NtfySystAbtxScsfStrt (wndw ... time.Duration)  (bool) {
 	/*--1--*/
 	_bb00 :=                    Mssg_Estb ([]string {"txxx.ba10"})
 	_bc00 := _bb00.Send (i.trck.idxx, i.blue.stxx.idxx, i, _ba00 )
+	if _bc00 != nil {
+		_ca00 := fmt.Sprintf ("Could not notify system. [%s]", _bc00.Error ())
+		_bc00 =  errors.New  (_ca00)
+	}
 	return _bc00
 }

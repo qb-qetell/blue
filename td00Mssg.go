@@ -1,5 +1,7 @@
 package blue
 
+import "errors"
+import "fmt"
 import "time"
 
 type Mssg struct {
@@ -11,8 +13,11 @@ type Mssg struct {
 	func Mssg_Estb (core interface {}) (*Mssg) {
 		return &Mssg {core: core}
 	}
-	func (i *Mssg) Send (sndr, rcpn string, phnx *Phnx, wndw ... time.Duration) (bool) {
-		if phnx == nil { return false }
+	func (i *Mssg) Send (sndr, rcpn string, phnx *Phnx, wndw ... time.Duration) (error) {
+		if phnx == nil {
+			_ca00 := fmt.Sprintf ("Phone not provided.",)
+			return errors.New (_ca00)
+		}
 		/*--1--*/
 		_bb00 := time.Nanosecond * 1
 		if wndw != nil && len (wndw) > 0 {

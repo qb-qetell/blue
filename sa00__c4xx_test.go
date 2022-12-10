@@ -10,9 +10,11 @@ func c4xx (mixx, idxx, name string, phnx *Phnx, edxx interface {}) (error)     {
 	fmt.Println ("c4xx:", "edxx:!", edxx)
 	/*--1--*/
 	_cb00 := phnx.NtfySystAbtxScsfStrt ()
-	if _cb00 == false {
-		_ca00 := fmt.Sprintf ("c1xx: %s: Could not send message.", idxx)
-		fmt.Println ( _ca00 )
+	if _cb00 != nil {
+		_ca00 := fmt.Sprintf (
+			"c4xx: %s: Could not send message. [%s]", idxx, _cb00.Error (),
+		)
+		fmt.Println ( _ca00  )
 	}
 	/*--1--*/
 	for {
