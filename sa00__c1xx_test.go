@@ -24,6 +24,8 @@ func c1xx (mixx, idxx, name string, phnx *Phnx, edxx interface {})     (error) {
 			fmt.Println (_cb00)
 		}
 	}
+	time.Sleep (time.Second * 4)
+	panic ("Testing")
 	/*--1--*/
 	return nil
 }

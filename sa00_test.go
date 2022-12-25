@@ -45,7 +45,7 @@ func TestBa00_ (t *testing.T) {
 	}
 	/*--1--*/
 	go func () {
-		time.Sleep (time.Second * 2)
+		time.Sleep (time.Second * 12)
 		_ba00.Halt  ()
 	} ()
 	for {
